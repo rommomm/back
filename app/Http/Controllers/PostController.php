@@ -7,76 +7,39 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    /**
-     * Get list of posts.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getAll()
+
+    public function index()
     {
         $posts = Post::all();
-        return response()->json(['posts'=>$posts], 200);
+        
+        return $posts;
     }
 
-    /**
-     * Create new post.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function save(Request $request)
+    public function store(Request $request)
     {
-            $request->validate([
-                'text'=>'required|min:5',
-            ]);
 
-            $post = new Post;
-            $post->text = $request->text;
-            $post->save();
-            
-            return response()->json(['message'=>'Post added'], 201);
-  
+        $post = new Post;
+        $post->text = $request->text;
+        $post->save();
+
+        return $post;
     }
 
-    /**
-     * Get post by id.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function getByID(Post $post)
+    public function show(Post $post)
     {
-        if(!$post){
-            return response()->json(['error'=>'Post not found'], 404);
-        }
-        return response()->json(['post'=>$post], 200);
+        return $post;
     }
 
-    /**
-     * Update post by id.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Post $post)
     {
-        
-            $post->text = $request->text;
-            $post->update();
-            return response()->json(['post'=>$post], 200);
-    
+        $post->text = $request->text;
+        $post->update();
+        return $post;
     }
 
-    /**
-     * Delete post by id.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function delete(Post $post)
-    {   
-            $post->delete();
-            return response()->json(['message'=>'Post successfully deleted'], 200);
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return response()->json(['message' => 'Post successfully deleted']);
     }
 }
