@@ -26,7 +26,6 @@ class PostController extends Controller
      */
     public function save(Request $request)
     {
-        try{
             $request->validate([
                 'text'=>'required|min:5',
             ]);
@@ -36,10 +35,7 @@ class PostController extends Controller
             $post->save();
             
             return response()->json(['message'=>'Post added'], 201);
-        }   
-        catch (Exception $ex) {
-            echo $ex->getMessage();
-        }
+  
     }
 
     /**
@@ -63,40 +59,24 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        $request->validate([
-            'text'=>'required|min:5',
-        ]);
-        $post = Post::find($id);
-        if(!$post){
-            return response()->json(['error'=>'Post not found'], 404);
-        }
-        else{
+        
             $post->text = $request->text;
             $post->update();
             return response()->json(['post'=>$post], 200);
-        }
-    }
     
+    }
+
     /**
      * Delete post by id.
      *
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function delete(Post $post)
     {   
-        try{
-            $post = Post::find($id);
-            if(!$post){
-                return response()->json(['error'=>'Post not found'], 404);
-            }
             $post->delete();
             return response()->json(['message'=>'Post successfully deleted'], 200);
-        }
-        catch (Exception $ex) {
-            echo $ex->getMessage();
-        }
     }
 }
