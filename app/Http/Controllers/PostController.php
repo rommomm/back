@@ -48,9 +48,8 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function getByID($id)
+    public function getByID(Post $post)
     {
-        $post = Post::find($id);
         if(!$post){
             return response()->json(['error'=>'Post not found'], 404);
         }
