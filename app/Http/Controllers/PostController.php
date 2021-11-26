@@ -3,26 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
-
+ 
 class PostController extends Controller
 {
 
     public function index()
     {
-        $posts = Post::all();
-        
-        return $posts;
+        return Post::all();
     }
 
     public function store(Request $request)
     {
-
-        $post = new Post;
-        $post->text = $request->text;
-        $post->save();
-
-        return $post;
+        return (Post::create(['text' => $request->text]));
     }
 
     public function show(Post $post)
@@ -32,14 +26,13 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        $post->text = $request->text;
-        $post->update();
+        $post->update(['text' => $request->text]);
         return $post;
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
-        return response()->json(['message' => 'Post successfully deleted']);
+        return response()->noContent();
     }
 }
