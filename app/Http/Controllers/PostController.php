@@ -19,20 +19,21 @@ class PostController extends Controller
         return (Post::create(['text' => $request->text]));
     }
 
-    public function show(Post $post)
+    public function show($post)
     {
+        return Post::find($post);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $post = Post::find($id);
+        $post->update($request->all());
         return $post;
     }
 
-    public function update(Request $request, Post $post)
+    public function destroy(Post $id)
     {
-        $post->update(['text' => $request->text]);
-        return $post;
-    }
-
-    public function destroy(Post $post)
-    {
-        $post->delete();
+        $id->delete();
         return response()->noContent();
     }
 }
