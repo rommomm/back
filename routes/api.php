@@ -10,7 +10,6 @@ use App\Http\Controllers\UserController;
 Route::post('/register' ,[UserController::class, 'register']);
 Route::post('/login' ,[UserController::class, 'login']);
 Route::get('/posts' ,[PostController::class, 'index']);
-Route::get('/posts/{id}' ,[PostController::class, 'show']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/posts' ,[PostController::class, 'store']);
@@ -23,3 +22,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+    Route::get('/{id}/posts', [UserController::class, 'getUserPosts']);

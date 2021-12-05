@@ -66,4 +66,9 @@ class UserController extends Controller
             'message' => 'Logged out'
         ];
     }
+
+    public function getUserPosts($id) {
+        return User::find($id)->posts;
+    }
+
 }

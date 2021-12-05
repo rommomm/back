@@ -16,7 +16,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        return (Post::create(['text' => $request->text]));
+        return (Post::firstOrCreate(['text' => $request->text,'user_id' => $request->id,]));
     }
 
     public function show($post)
