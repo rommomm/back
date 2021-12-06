@@ -22,7 +22,7 @@ class UserController extends Controller
             'last_name' => $request->last_name,
             'user_name' => $request->user_name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => ($request->password),
         ]);
 
       $token = $user->createToken('myToken')->plainTextToken;
@@ -69,6 +69,11 @@ class UserController extends Controller
 
     public function getUserPosts($id) {
         return User::find($id)->posts;
+    }
+
+    public function getUserInfoById($id)
+    {
+        return User::find($id);
     }
 
 }

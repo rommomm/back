@@ -6,10 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
 // Route::apiResource('posts', PostController::class);
-
 Route::post('/register' ,[UserController::class, 'register']);
 Route::post('/login' ,[UserController::class, 'login']);
 Route::get('/posts' ,[PostController::class, 'index']);
+Route::get('/posts/{id}' ,[PostController::class, 'show']);
+
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/posts' ,[PostController::class, 'store']);
@@ -24,3 +25,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
     Route::get('/{id}/posts', [UserController::class, 'getUserPosts']);
+    Route::get('user/{id}', [UserController::class, 'getUserInfoById']);
