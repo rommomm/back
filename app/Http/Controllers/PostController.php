@@ -27,19 +27,23 @@ class PostController extends Controller
 
     public function update( Request $request,$id)
     {
-        // $post = Post::find($id);
-        // $post->update($request->all());
-        // return $post;
-        $post = Post::find($id);
-        $post->user_id = auth()->user()->id;
-        $post->update($request->all());
-        return $post;
+            $userId = auth()->user()->id;
+            $post = Post::find($id);
+            if($userId != $post->user_id){
+                return response()->json(['error' => 'Forbidden.'],403);}
+                $post->update($request->all());
+            return $post;
 
     }
 
     public function destroy($id)
     {
-        Post::findOrFail($id)->delete();
+        $userId = auth()->user()->id;
+        $post  = Post::findOrFail($id);
+        if($userId != $post->user_id){
+            return response()->json(['error' => 'Forbidden.'],403);
+        }
+            $post->delete();
         return response()->noContent();
     }
 }

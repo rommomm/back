@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use App\Models\Post;
 
+
 class UserController extends Controller
 {
     public function register(Request $request) {
