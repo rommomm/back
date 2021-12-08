@@ -5,6 +5,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use App\Models\Post;
 
 class UserController extends Controller
 {
@@ -67,13 +68,13 @@ class UserController extends Controller
         ];
     }
 
+    public function getUserProfile($id) {
+        return User::findOrFail($id);
+    }
+
     public function getUserPosts($id) {
         return User::find($id)->posts;
     }
 
-    public function getUserInfoById($id)
-    {
-        return User::find($id);
-    }
 
 }
