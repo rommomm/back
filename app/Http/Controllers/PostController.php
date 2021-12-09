@@ -21,8 +21,8 @@ class PostController extends Controller
     }
 
     public function show($post)
-    {
-        return Post::find($post);
+    {  
+        return Post::findOrFail($post);
     }
 
     public function update( Request $request,$id)
