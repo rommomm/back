@@ -28,7 +28,7 @@ class PostController extends Controller
     public function update( Request $request,$id)
     {
             $userId = auth()->user()->id;
-            $post = Post::find($id);
+            $post = Post::findOrFail($id);
             if($userId != $post->user_id){
                 return response()->json(['error' => 'Forbidden.'],403);}
                 $post->update($request->all());

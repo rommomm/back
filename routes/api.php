@@ -26,3 +26,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
     Route::get('/{id}/posts', [UserController::class, 'getUserPosts']);
     Route::get('user/{id}', [UserController::class, 'getUserProfile']);
+    Route::get('/users', [UserController::class, 'getAllUser']);

@@ -69,6 +69,11 @@ class UserController extends Controller
         ];
     }
 
+    public function getAllUser()
+    {
+        return User::all();
+    }
+
     public function getUserProfile($id) {
         return User::findOrFail($id);
     }
