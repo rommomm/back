@@ -23,7 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-    Route::get('/{id}/posts', [UserController::class, 'getUserPosts']);
-    Route::get('user/{id}', [UserController::class, 'getUserProfile']);
-    Route::get('/users', [UserController::class, 'getAllUser']);
-    Route::get('/posts/{id}' ,[PostController::class, 'show']);
+Route::get('users/{id}/posts', [UserController::class, 'getUserPosts']);
+Route::get('users/{id}', [UserController::class, 'getUserProfile']);
+Route::get('/users', [UserController::class, 'getAllUser']);
+Route::get('/posts/{id}' ,[PostController::class, 'show']);

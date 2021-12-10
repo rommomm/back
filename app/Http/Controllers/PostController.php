@@ -12,7 +12,7 @@ class PostController extends Controller
 
     public function index()
     {
-        return Post::all();
+        return Post::with('user')->get();
     }
 
     public function store(Request $request)
@@ -22,7 +22,7 @@ class PostController extends Controller
 
     public function show($post)
     {  
-        return Post::findOrFail($post);
+        return Post::find($post);
     }
 
     public function update( Request $request,$id)
@@ -46,4 +46,7 @@ class PostController extends Controller
             $post->delete();
         return response()->noContent();
     }
+
+    
+
 }
