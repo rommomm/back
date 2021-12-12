@@ -74,13 +74,14 @@ class UserController extends Controller
         return User::all();
     }
 
-    public function getUserProfile($id) {
-        return User::findOrFail($id);
+    public function getUserProfile($user_name) {
+        $user = User::where('user_name', $user_name)->first();
+        return $user;
     }
 
     public function getUserPosts($id) {
         return User::find($id)->posts;
     }
 
-
+ 
 }
