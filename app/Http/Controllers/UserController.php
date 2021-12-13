@@ -5,7 +5,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use App\Models\Post;
 
 
 class UserController extends Controller
@@ -27,7 +26,7 @@ class UserController extends Controller
             'password' => ($request->password),
         ]);
 
-      $token = $user->createToken('myToken')->plainTextToken;
+    $token = $user->createToken('myToken')->plainTextToken;
 
         $response = [
             'user' => $user,
@@ -80,8 +79,6 @@ class UserController extends Controller
     }
 
     public function getUserPosts($id) {
-        return User::find($id)->posts;
+        return User::find($id)->posts->sortByDesc('created_at')->values();
     }
-
- 
 }

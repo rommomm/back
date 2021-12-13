@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
-use App\Models\User;
  
 class PostController extends Controller
 {
 
     public function index()
     {
-        return Post::with('user')->get();
+        return Post::orderBy('created_at', 'desc')->with('user')->get();
     }
 
     public function store(Request $request)
@@ -33,7 +31,6 @@ class PostController extends Controller
                 return response()->json(['error' => 'Forbidden.'],403);}
                 $post->update($request->all());
             return $post;
-
     }
 
     public function destroy($id)
