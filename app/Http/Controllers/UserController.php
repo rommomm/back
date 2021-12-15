@@ -12,8 +12,9 @@ class UserController extends Controller
     {
         return User::all();
     }
-    
-    public function getUserPosts($id) {
-        return User::find($id)->posts->sortByDesc('created_at')->values();
+
+    public function getUserPosts(User $user) {
+
+        return $user->posts()->get()->sortByDesc('created_at')->values();
     }
 }
