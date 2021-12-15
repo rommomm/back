@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
- 
+
 class PostController extends Controller
 {
 
@@ -28,7 +28,8 @@ class PostController extends Controller
             $userId = auth()->user()->id;
             $post = Post::findOrFail($id);
             if($userId != $post->user_id){
-                return response()->json(['error' => 'Forbidden.'],403);}
+                return response()->json(['error' => 'Forbidden.'],403);
+                }
                 $post->update($request->all());
             return $post;
     }
@@ -39,11 +40,8 @@ class PostController extends Controller
         $post  = Post::findOrFail($id);
         if($userId != $post->user_id){
             return response()->json(['error' => 'Forbidden.'],403);
-        }
+            }
             $post->delete();
         return response()->noContent();
     }
-
-    
-
 }
