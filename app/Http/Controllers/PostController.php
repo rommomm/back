@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class PostController extends Controller
 {
@@ -15,7 +16,10 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        return (Post::create(['user_id' => auth()->user()->id, 'text'=>$request->text]));
+        $request->validate([
+            'text' => 'required|max:255'
+        ]);
+        return Post::create(['user_id' => auth()->user()->id, 'text'=>$request->text]);
     }
 
     public function show($post)
@@ -44,4 +48,6 @@ class PostController extends Controller
             $post->delete();
         return response()->noContent();
     }
+
+    
 }
