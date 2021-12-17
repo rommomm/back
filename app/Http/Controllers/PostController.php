@@ -17,7 +17,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'text' => 'required|max:255'
+            'text' => 'required|min:10|max:255'
         ]);
         return Post::create(['user_id' => auth()->user()->id, 'text'=>$request->text]);
     }
