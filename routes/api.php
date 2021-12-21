@@ -9,9 +9,9 @@ use App\Http\Controllers\AuthController;
 Route::post('/register' ,[AuthController::class, 'register']);
 Route::post('/login' ,[AuthController::class, 'login']);
 Route::get('/posts' ,[PostController::class, 'index']);
-Route::get('users/{user:user_name}/posts', [UserController::class, 'getUserPosts']);
-Route::get('users/{user:user_name}', [AuthController::class, 'AuthMe']);
-Route::get('/users', [UserController::class, 'allUser']);
+Route::get('users/{user:user_name}/posts', [UserController::class, 'show']);
+Route::get('users/{user:user_name}', [UserController::class, 'show']);
+Route::get('/users', [UserController::class, 'index']);
 Route::get('/posts/{id}' ,[PostController::class, 'show']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {

@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-
+use App\Http\Requests\Validation;
 class PostController extends Controller
 {
 
@@ -14,12 +13,10 @@ class PostController extends Controller
         return Post::orderBy('created_at', 'desc')->with('user')->get();
     }
 
-    public function store(Request $request)
+    public function store(Validation $request)
     {
-        $request->validate([
-            'text' => 'required|min:10|max:255'
-        ]);
-        return Post::create(['user_id' => auth()->user()->id, 'text'=>$request->text]);
+        $request->safe()->only(['text']);
+        return auth()->user()->posts()->create(['text' => $request->text]) ;
     }
 
     public function show($post)
@@ -27,25 +24,25 @@ class PostController extends Controller
         return Post::find($post);
     }
 
-    public function update( Request $request,$id)
-    {
-            $userId = auth()->user()->id;
-            $post = Post::findOrFail($id);
-            if($userId != $post->user_id){
-                return response()->json(['error' => 'Forbidden.'],403);
-                }
-                $post->update($request->all());
-            return $post;
-    }
-
-    public function destroy($id)
+    public function update(Request $request,$post)
     {
         $userId = auth()->user()->id;
-        $post  = Post::findOrFail($id);
-        if($userId != $post->user_id){
+        $updatedPost = Post::findOrFail($post);
+        if($userId != $updatedPost->user_id){
             return response()->json(['error' => 'Forbidden.'],403);
             }
-            $post->delete();
+            $updatedPost->update($request->all());
+        return $updatedPost;
+}
+
+    public function destroy($post)
+    {
+        $userId = auth()->user()->id;
+        $deletedPost = Post::findOrFail($post);
+        if($userId != $deletedPost->user_id){
+            return response()->json(['error' => 'Forbidden.'],403);
+            }
+            $deletedPost->delete();
         return response()->noContent();
     }
 
