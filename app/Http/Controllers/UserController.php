@@ -7,18 +7,13 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-
-    public function index()
+    public function index(User $user) 
     {
-        return User::all();
+        return $user->posts()->get()->sortByDesc('created_at')->values();
     }
 
-    // public function show(User $user) {
-
-    //     return $user->posts()->get()->sortByDesc('created_at')->values();
-    // }
-
-    public function show($user_name) {
+    public function show($user_name) 
+    {
         $user = User::where('user_name', $user_name)->first();
         return $user;
     }

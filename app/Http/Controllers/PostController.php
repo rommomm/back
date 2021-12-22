@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Validation;
 class PostController extends Controller
 {
-
     public function index()
     {
         return Post::orderBy('created_at', 'desc')->with('user')->get();
@@ -33,7 +32,7 @@ class PostController extends Controller
             }
             $updatedPost->update($request->all());
         return $updatedPost;
-}
+    }
 
     public function destroy($post)
     {
@@ -44,7 +43,5 @@ class PostController extends Controller
             }
             $deletedPost->delete();
         return response()->noContent();
-    }
-
-    
+    } 
 }

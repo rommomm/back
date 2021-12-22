@@ -26,9 +26,10 @@ class AuthController extends Controller
         }
         $user =  User::where('email' , $request->login)->orWhere('user_name', $request->login)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) 
+        {
             return response([
-                'password' => 'Incorrect login or password',
+                'message' => 'Incorrect login or password',
                 
             ], 401);
         }
@@ -36,18 +37,23 @@ class AuthController extends Controller
         $token = $user->createToken('myToken')->plainTextToken;
 
         $response = [
-            'user' => $user,
             'token' => $token
         ];
 
         return response($response, 201);
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request) 
+    {
         auth()->user()->tokens()->delete();
 
         return [
             'message' => 'Logged out'
         ];
+    }
+
+    public function show(Request $request)
+    {
+        return auth()->user();
     }
 }
