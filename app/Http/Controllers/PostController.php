@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\Validation;
+use App\Http\Resources\PostResource;
+
 class PostController extends Controller
 {
     public function index()
@@ -23,25 +25,15 @@ class PostController extends Controller
         return Post::find($post);
     }
 
-    public function update(Request $request,$post)
+    public function update(Validation $request, Post $post)
     {
-        $userId = auth()->user()->id;
-        $updatedPost = Post::findOrFail($post);
-        if($userId != $updatedPost->user_id){
-            return response()->json(['error' => 'Forbidden.'],403);
-            }
-            $updatedPost->update($request->all());
-        return $updatedPost;
+        $post->update($request->validated());
+        return new PostResource($post);
     }
 
-    public function destroy($post)
+    public function destroy(Post $post)
     {
-        $userId = auth()->user()->id;
-        $deletedPost = Post::findOrFail($post);
-        if($userId != $deletedPost->user_id){
-            return response()->json(['error' => 'Forbidden.'],403);
-            }
-            $deletedPost->delete();
+        $post->delete();
         return response()->noContent();
     } 
 }

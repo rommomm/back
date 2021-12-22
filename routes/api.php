@@ -15,8 +15,8 @@ Route::get('/posts/{id}' ,[PostController::class, 'show']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/posts' ,[PostController::class, 'store']);
-    Route::put('/posts/{id}' ,[PostController::class, 'update']);
-    Route::delete('/posts/{id}' ,[PostController::class, 'destroy']);
+    Route::put('/posts/{post}' ,[PostController::class, 'update'])->middleware('can:update,post');
+    Route::delete('/posts/{post}' ,[PostController::class, 'destroy'])->middleware('can:delete,post');
     Route::post('/logout' ,[AuthController::class, 'logout']);
     Route::get('/auth/me' ,[AuthController::class, 'show']);
 

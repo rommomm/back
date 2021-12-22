@@ -20,7 +20,7 @@ class AuthController extends Controller
         if(!(Auth::attempt(['email' => $request->login, 'password' => $request->password]) || Auth::attempt(['user_name' => $request->login, 'password' => $request->password])))
         {
             return response([
-                'message' => 'Incorrect login or password',
+                'password' => 'Incorrect login or password',
                 
             ], 401);
         }
@@ -29,7 +29,7 @@ class AuthController extends Controller
         if (!$user || !Hash::check($request->password, $user->password)) 
         {
             return response([
-                'message' => 'Incorrect login or password',
+                'password' => 'Incorrect login or password',
                 
             ], 401);
         }
