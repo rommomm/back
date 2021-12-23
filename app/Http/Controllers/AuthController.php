@@ -16,8 +16,10 @@ class AuthController extends Controller
 
     public function login(Validation $request)
     {
-        $request->safe()->only(['email', 'password']);
-        if(!(Auth::attempt(['email' => $request->login, 'password' => $request->password]) || Auth::attempt(['user_name' => $request->login, 'password' => $request->password])))
+        $credentialsUsername = (['user_name' => $request->user_name, 'password' => $request->password]);
+        $credentialsEmail = (['email' => $request->email, 'password' => $request->password]);
+        $credentials = $credentialsUsername or $credentialsEmail;
+        if((Auth::attempt($credentials)))
         {
             return response([
                 'password' => 'Incorrect login or password',
