@@ -21,8 +21,7 @@ class AuthController extends Controller
         : 'user_name';
         $request->merge([$login_type => $request->input('login')]);
         $credentials = $request->only($login_type, 'password');
-        dd( $credentials);
-        if(!(Auth::attempt($credentials)))
+        if((Auth::attempt($credentials)))
         {
             return response([
                 'password' => 'Incorrect login or password',
