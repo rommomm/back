@@ -16,10 +16,13 @@ class AuthController extends Controller
 
     public function login(Validation $request)
     {
-        $credentialsUsername = (['user_name' => $request->user_name, 'password' => $request->password]);
-        $credentialsEmail = (['email' => $request->email, 'password' => $request->password]);
-        $credentials = $credentialsUsername or $credentialsEmail;
-        if((Auth::attempt($credentials)))
+        $login_type = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL)
+        ? 'email'
+        : 'user_name';
+        $request->merge([$login_type => $request->input('login')]);
+        $credentials = $request->only($login_type, 'password');
+        dd( $credentials);
+        if(!(Auth::attempt($credentials)))
         {
             return response([
                 'password' => 'Incorrect login or password',
@@ -27,14 +30,6 @@ class AuthController extends Controller
             ], 401);
         }
         $user =  User::where('email' , $request->login)->orWhere('user_name', $request->login)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) 
-        {
-            return response([
-                'password' => 'Incorrect login or password',
-                
-            ], 401);
-        }
 
         $token = $user->createToken('myToken')->plainTextToken;
 
