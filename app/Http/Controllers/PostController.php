@@ -38,7 +38,7 @@ class PostController extends Controller
         return response()->noContent();
     } 
 
-    public function getUserPosts(User $user) 
+    public function getAllbyPosts(User $user) 
     {
         return $user->posts()->get()->sortByDesc('created_at')->values();
     }

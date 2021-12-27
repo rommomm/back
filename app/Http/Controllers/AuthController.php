@@ -1,20 +1,21 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoignRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\SignInRequest;
+use App\Http\Requests\SignUpRequest;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function register(RegisterRequest $request) {
+    public function register(SignUpRequest $request) 
+    {
         User::create($request->validated());
         return response()->noContent(201);
     }
 
-    public function login(LoignRequest $request)
+    public function login(SignInRequest $request)
     {
         $loginType = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL)
         ? 'email'
@@ -30,7 +31,6 @@ class AuthController extends Controller
         return response([
             'token' => $token
         ], 201);
-
     }
 
     public function logout() 
