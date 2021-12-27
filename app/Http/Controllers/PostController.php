@@ -2,30 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
-use Illuminate\Http\Request;
-use App\Http\Requests\Validation;
 use App\Http\Resources\PostResource;
+use App\Models\User;
 
 class PostController extends Controller
 {
     public function index()
     {
-        return Post::orderBy('created_at', 'desc')->with('user')->get();
+        return PostResource::collection(Post::orderBy('id', 'desc')->with('user')->get());
     }
 
-    public function store(Validation $request)
+    public function store(CreatePostRequest $request)
     {
-        $request->safe()->only(['text']);
-        return auth()->user()->posts()->create(['text' => $request->text]) ;
+        $post = auth()->user()->posts()->create($request->validated()) ;
+        return new PostResource($post);
     }
 
-    public function show($post)
+    public function show(Post $post)
     {  
-        return Post::find($post);
+        return new PostResource($post);
     }
 
-    public function update(Validation $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
         $post->update($request->validated());
         return new PostResource($post);
@@ -36,4 +37,9 @@ class PostController extends Controller
         $post->delete();
         return response()->noContent();
     } 
+
+    public function getUserPosts(User $user) 
+    {
+        return $user->posts()->get()->sortByDesc('created_at')->values();
+    }
 }
