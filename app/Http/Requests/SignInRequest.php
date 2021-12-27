@@ -25,6 +25,7 @@ class SignInRequest extends FormRequest
     {
         return [
             'login' => 'required|string',
+            'password' => 'required'
         ];
     }
 }

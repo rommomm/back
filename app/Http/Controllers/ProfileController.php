@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProfileResource;
+
 class ProfileController extends Controller
 {
     public function show()
     {
-        return auth()->user();
+        return new ProfileResource(auth()->user());
     }
 }
