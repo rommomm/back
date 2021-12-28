@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Controllers\PostController;
+use App\Models\Post;
 use App\Policies\PostPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -14,7 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        PostController::class => PostPolicy::class,
+        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Post::class => PostPolicy::class    
     ];
 
     /**
