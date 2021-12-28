@@ -10,13 +10,13 @@ class PostPolicy
 {
     use HandlesAuthorization;
 
-    public function update(User $user, Post $post)
+    public function update(User $author, Post $post)
     {
-        return $user->id === $post->user_id;
+        return $author->id === $post->author_id;
     }
 
-    public function delete(User $user, Post $post)
+    public function delete(User $author, Post $post)
     {
-        return $user->id === $post->user_id;
+        return $author->id === $post->author_id;
     }
 }

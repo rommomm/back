@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        return PostResource::collection(Post::orderBy('id', 'desc')->with('user')->get());
+        return PostResource::collection(Post::orderBy('id', 'desc')->with('author')->get());
     }
 
     public function store(CreatePostRequest $request)
@@ -38,8 +38,8 @@ class PostController extends Controller
         return response()->noContent();
     } 
 
-    public function getAllbyPosts(User $user) 
+    public function getAllbyPosts(User $author) 
     {
-        return $user->posts()->get()->sortByDesc('created_at')->values();
+        return $author->posts()->get()->sortByDesc('created_at')->values();
     }
 }

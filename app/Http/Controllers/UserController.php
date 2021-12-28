@@ -6,8 +6,8 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function show(User $user) 
+    public function show(User $author) 
     {
-        return new UserResource($user);
+        return new UserResource($author);
     }
 }

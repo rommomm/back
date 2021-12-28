@@ -9,8 +9,8 @@ use App\Http\Controllers\ProfileController;
 Route::post('/register' ,[AuthController::class, 'register']);
 Route::post('/login' ,[AuthController::class, 'login']);
 Route::get('/posts' ,[PostController::class, 'index']);
-Route::get('users/{user:user_name}/posts', [PostController::class, 'getAllbyPosts']);
-Route::get('users/{user:user_name}', [UserController::class, 'show']);
+Route::get('users/{author:user_name}/posts', [PostController::class, 'getAllbyPosts']);
+Route::get('users/{author:user_name}', [UserController::class, 'show']);
 Route::get('/posts/{post}' ,[PostController::class, 'show']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
