@@ -2,37 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
-use Dflydev\DotAccessData\Data;
-use Illuminate\Http\Request;
- 
+use App\Http\Resources\PostResource;
+use App\Models\User;
+
 class PostController extends Controller
 {
-
     public function index()
     {
-        return Post::all();
+        return PostResource::collection(Post::orderBy('id', 'desc')->with('author')->get());
     }
 
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        return (Post::create(['text' => $request->text]));
+        $post = auth()->user()->posts()->create($request->validated()) ;
+        return new PostResource($post);
     }
 
     public function show(Post $post)
-    {
-        return $post;
+    {  
+        return new PostResource($post);
     }
 
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        $post->update(['text' => $request->text]);
-        return $post;
+        $post->update($request->validated());
+        return new PostResource($post);
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
         return response()->noContent();
+    } 
+
+    public function getAllByUser(User $author) 
+    {
+        return $author->posts()->orderBy('id' , 'desc')->get();
     }
 }
