@@ -7,7 +7,6 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Http\Resources\PostResource;
 use App\Models\User;
-
 class PostController extends Controller
 {
     public function index()
