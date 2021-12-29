@@ -38,7 +38,7 @@ class PostController extends Controller
         return response()->noContent();
     } 
 
-    public function getAllByPosts(User $author) 
+    public function getAllByUser(User $author) 
     {
         return $author->posts()->orderBy('id' , 'desc')->get();
     }

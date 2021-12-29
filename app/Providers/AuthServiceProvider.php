@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\PostController;
 use App\Models\Post;
 use App\Policies\PostPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
