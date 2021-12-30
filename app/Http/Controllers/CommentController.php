@@ -16,10 +16,10 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Post $post)
-    {        
-        return $post->comments()->orderBy('id' , 'desc')->get();
-        // return CommentResource::collection(Comment::orderBy('id', 'desc')->with('author')->get());
+    public function index()
+    {
+        
+        return CommentResource::collection(Comment::orderBy('id' , 'desc')->with('post')->get());
     }
 
     /**
@@ -38,13 +38,15 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request , Post $post)
-    {
-        $comment = $post->comments()->create([
-            'content' => $request->content,
-            'author_id' => Auth::id()
+    public function store(Request $request, Post $post)
+    { 
+        $this->validate($request,[
+            'content' => 'required'
         ]);
-        $comment = Comment::where('id', $comment->id)->first();
+        $comment = new Comment();
+        $comment->author_id = Auth::id();
+        $comment->content = $request->content;
+        $post->comments()->save($comment);
         return new CommentResource($comment);
         
     }
@@ -55,9 +57,10 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
-    {
-        //
+    public function show(Request $request, Post $post)
+    {  
+   
+        return CommentResource::collection($post->comments()->orderBy('id' , 'desc')->get());
     }
 
     /**

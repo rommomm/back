@@ -11,7 +11,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        return PostResource::collection(Post::orderBy('id', 'desc')->with('author')->get());
+        return PostResource::collection(Post::orderBy('id', 'desc')->with('comments')->get());
     }
 
     public function store(CreatePostRequest $request)

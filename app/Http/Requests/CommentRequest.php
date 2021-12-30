@@ -14,9 +14,9 @@ class CommentRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
-
+ 
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,8 +25,7 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => 'required|min:10|max:255',
-            'author_id' => Auth::id()
+            'content' => 'required|max:1000',
         ];
     }
 }

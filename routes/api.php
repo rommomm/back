@@ -13,7 +13,8 @@ Route::get('/posts' ,[PostController::class, 'index']);
 Route::get('users/{author:user_name}/posts', [PostController::class, 'getAllByUser']);
 Route::get('users/{author:user_name}', [UserController::class, 'show']);
 Route::get('/posts/{post}' ,[PostController::class, 'show']);
-Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
+Route::get('/posts/{post}/comments', [CommentController::class, 'show']);
+Route::get('/comments/posts', [CommentController::class, 'index']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -22,7 +23,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/posts/{post}' ,[PostController::class, 'destroy'])->middleware('can:delete,post');
     Route::post('/logout' ,[AuthController::class, 'logout']);
     Route::get('/auth/me' ,[ProfileController::class, 'show']);
-    Route::post('/posts/{post}/comment', [CommentController::class, 'store']);
+    Route::post('/comment/{post}', [CommentController::class, 'store']);
 
 });
 
