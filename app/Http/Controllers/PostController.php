@@ -7,11 +7,16 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Http\Resources\PostResource;
 use App\Models\User;
+
 class PostController extends Controller
 {
     public function index()
     {
-        return PostResource::collection(Post::orderBy('id', 'desc')->with('comments')->get());
+        return PostResource::collection(Post::orderBy('id', 'desc')->with([
+            'comments' => function($q){
+                $q->orderBy('id', 'desc');
+            }
+        ])->get());
     }
 
     public function store(CreatePostRequest $request)
@@ -39,6 +44,17 @@ class PostController extends Controller
 
     public function getAllByUser(User $author) 
     {
-        return $author->posts()->orderBy('id' , 'desc')->get();
+        return PostResource::collection(
+            Post::where('author_id', $author->id)
+                ->orderBy('id', 'desc')
+                ->with([
+                    'comments' => function($q){
+                        $q->orderBy('id', 'desc');
+                    }
+                ])
+                ->get()
+        );
+    
+        // return $author->posts()->orderBy('id' , 'desc')->with('comments')->get();
     }
 }
