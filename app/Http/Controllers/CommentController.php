@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
+use App\Http\Requests\UpdateCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Post;
@@ -16,10 +17,9 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Post $post)
     {
-        
-        return CommentResource::collection(Comment::orderBy('id' , 'desc')->with('post')->get());
+        return CommentResource::collection($post->comments()->orderBy('id' , 'desc')->get());
     }
 
     /**
@@ -38,14 +38,10 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Post $post)
+    public function store(CommentRequest $request, Post $post)
     { 
-        $this->validate($request,[
-            'content' => 'required'
-        ]);
-        $comment = new Comment();
+        $comment = new Comment($request->validated());
         $comment->author_id = Auth::id();
-        $comment->content = $request->content;
         $post->comments()->save($comment);
         return new CommentResource($comment);
         
@@ -57,10 +53,9 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Post $post)
+    public function show(Request $request, Comment $comment)
     {  
-   
-        return CommentResource::collection($post->comments()->orderBy('id' , 'desc')->get());
+        return new CommentResource($comment);   
     }
 
     /**
@@ -81,19 +76,15 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(UpdateCommentRequest $request, Comment $comment)
     {
-        //
+        $comment->update($request->validated());
+        return new CommentResource($comment);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Comment $comment)
     {
-        //
-    }
+        $comment->delete();
+        return response()->noContent();
+    } 
 }

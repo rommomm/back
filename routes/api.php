@@ -13,17 +13,19 @@ Route::get('/posts' ,[PostController::class, 'index']);
 Route::get('users/{author:user_name}/posts', [PostController::class, 'getAllByUser']);
 Route::get('users/{author:user_name}', [UserController::class, 'show']);
 Route::get('/posts/{post}' ,[PostController::class, 'show']);
-Route::get('/posts/{post}/comments', [CommentController::class, 'show']);
-Route::get('/comments', [CommentController::class, 'index']);
+Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
+Route::get('/comments/{comment}', [CommentController::class, 'show']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/posts' ,[PostController::class, 'store']);
     Route::put('/posts/{post}' ,[PostController::class, 'update'])->middleware('can:update,post');
     Route::delete('/posts/{post}' ,[PostController::class, 'destroy'])->middleware('can:delete,post');
+    Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
+    Route::put('/comments/{comment}', [CommentController::class, 'update'])->middleware('can:update,comment');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->middleware('can:delete,comment');
     Route::post('/logout' ,[AuthController::class, 'logout']);
     Route::get('/auth/me' ,[ProfileController::class, 'show']);
-    Route::post('/posts/{post}/comment', [CommentController::class, 'store']);
 
 });
 
