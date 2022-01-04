@@ -22,60 +22,19 @@ class CommentController extends Controller
         return CommentResource::collection($post->comments()->orderBy('id' , 'desc')->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-       //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CommentRequest $request, Post $post)
-    { 
-        $comment = new Comment($request->validated());
-        $comment->author_id = Auth::id();
-        $post->comments()->save($comment);
-        return new CommentResource($comment);
-        
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request, Comment $comment)
     {  
         return new CommentResource($comment);   
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comment $comment)
-    {
-        //
+    public function store(CommentRequest $request, Post $post)
+    { 
+        $comment = new Comment($request->validated());
+        $comment->author_id = Auth::id();
+        $post->comments()->save($comment);
+        return new CommentResource($comment);  
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
         $comment->update($request->validated());

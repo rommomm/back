@@ -3,11 +3,11 @@
 namespace Database\Factories;
 
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CommentFactory extends Factory
 {
-    protected $model = Comment::class;
 
     /**
      * Define the model's default state.
@@ -17,9 +17,8 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            'author_id' => $this->faker->randomDigit() + 1,
-            'post_id' => $this->faker->randomDigit() + 1,
-            'comment' => $this->faker->realText(100)
+            'author_id' => User::all()->random()->id,
+            'content' => $this->faker->text(100)
         ];
     }
 }
