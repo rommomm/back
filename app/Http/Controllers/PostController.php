@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        return PostResource::collection(Post::orderBy('id', 'desc')->with([
+        return PostResource::collection(Post::orderBy('id', 'desc')->withCount([
             'comments' => function($q){
                 $q->orderBy('id', 'desc');
             }
@@ -27,7 +27,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {  
-       return new PostResource($post->load('comments'));   
+    return new PostResource($post->load('comments'));   
     }
     
     public function update(UpdatePostRequest $request, Post $post)
@@ -47,7 +47,7 @@ class PostController extends Controller
         return PostResource::collection(
             Post::where('author_id', $author->id)
                 ->orderBy('id', 'desc')
-                ->with([
+                ->withCount([
                     'comments' => function($q){
                         $q->orderBy('id', 'desc');
                     }
