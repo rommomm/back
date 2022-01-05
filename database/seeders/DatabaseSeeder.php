@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(1)->has(
             Post::factory()->count(10)
-                ->has(Comment::factory()->count(1))
+                ->has(Comment::factory()->count(10))
         )->create();
     }
 }

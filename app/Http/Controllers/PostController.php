@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
 use App\Http\Requests\UpdatePostRequest;
-use App\Http\Resources\CommentResource;
 use App\Models\Post;
 use App\Http\Resources\PostResource;
-use App\Models\Comment;
 use App\Models\User;
 
 class PostController extends Controller
@@ -24,12 +22,12 @@ class PostController extends Controller
     public function store(CreatePostRequest $request)
     {
         $post = auth()->user()->posts()->create($request->validated()) ;
-        return new PostResource($post);
+        return new PostResource($post->load('comments'));
     }
 
-    public function show(Post $post ,Comment $comment)
+    public function show(Post $post)
     {  
-        return new PostResource($post);
+       return new PostResource($post->load('comments'));   
     }
     
     public function update(UpdatePostRequest $request, Post $post)
