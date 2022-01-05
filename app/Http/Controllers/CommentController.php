@@ -7,22 +7,16 @@ use App\Http\Requests\UpdateCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Post;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Post $post)
     {
         return CommentResource::collection($post->comments()->orderBy('id' , 'desc')->get());
     }
 
-    public function show(Request $request, Comment $comment)
+    public function show(Comment $comment)
     {  
         return new CommentResource($comment);   
     }

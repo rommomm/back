@@ -54,7 +54,5 @@ class PostController extends Controller
                 ])
                 ->get()
         );
-    
-        // return $author->posts()->orderBy('id' , 'desc')->with('comments')->get();
     }
 }
