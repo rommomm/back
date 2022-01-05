@@ -16,6 +16,11 @@ class CommentController extends Controller
         return CommentResource::collection($post->comments()->orderBy('id' , 'desc')->get());
     }
 
+    public function getAll(Comment $comment)
+    {
+        return CommentResource::collection($comment->orderBy('id' , 'desc')->get());
+    }
+
     public function show(Comment $comment)
     {  
         return new CommentResource($comment);   

@@ -15,6 +15,7 @@ Route::get('users/{author:user_name}/posts', [PostController::class, 'getAllByUs
 Route::get('/posts/{post}' ,[PostController::class, 'show']);
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
 Route::get('/comments/{comment}', [CommentController::class, 'show']);
+Route::get('/comments', [CommentController::class, 'getAll']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {

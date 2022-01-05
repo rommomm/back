@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\CommentResource;
 use App\Models\Post;
 use App\Http\Resources\PostResource;
+use App\Models\Comment;
 use App\Models\User;
 
 class PostController extends Controller
@@ -25,11 +27,11 @@ class PostController extends Controller
         return new PostResource($post);
     }
 
-    public function show(Post $post)
+    public function show(Post $post ,Comment $comment)
     {  
         return new PostResource($post);
     }
-
+    
     public function update(UpdatePostRequest $request, Post $post)
     {
         $post->update($request->validated());
