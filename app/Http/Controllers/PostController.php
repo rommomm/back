@@ -41,6 +41,6 @@ class PostController extends Controller
 
     public function getAllByUser(User $user) 
     {
-        return PostResource::collection($user->posts()->orderBy('id' , 'desc')->withCount('comments')->get());  
+        return $user->posts()->orderBy('id' , 'desc')->withCount('comments')->get();  
     }
 }
