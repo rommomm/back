@@ -24,11 +24,11 @@ class UpdateProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'nullable|min:3|max:20',
-            'last_name' => 'nullable|min:3|max:20',
-            'profile_photo' => 'nullable|image',
-            'profile_background' => 'nullable|image',
-            'user_location' => 'nullable|min:3|max:20',
+            'first_name' => 'max:30',
+            'last_name' => 'max:30',
+            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'profile_background' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'user_location' => 'max:50',
 
         ];
     }
