@@ -8,18 +8,9 @@ use Illuminate\Support\Facades\URL;
 
 class Profile extends Model
 {
-  protected static function booted()
-    {
-        static::created(function ($profile) {
-            $profile->update(['profile_photo' => URL::asset('/uploads/roba/images/avatar/avatar.png'), 
-            'profile_background' => URL::asset('/uploads/roba/images/avatar/avatar.png')]);
-        });
-    }
 
     use HasFactory;
     protected $fillable = [
-        'first_name',
-        'last_name',
         'profile_photo',
         'profile_background',
         'user_location',

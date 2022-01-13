@@ -14,7 +14,7 @@ class ProfileController extends Controller
         return new ProfileResource(auth()->user());
     }
 
-   public function updateProfile(UpdateProfileRequest $request )
+    public function updateProfile(UpdateProfileRequest $request )
     {
         $user = auth()->user();
         $userInput = $request->only('first_name', 'last_name');
@@ -35,17 +35,31 @@ class ProfileController extends Controller
         $user->profile->save();
         return $user;
     }
-    // public function uploadBackground(UpdateProfileRequest $request )
-    // {
-    //     $user = auth()->user();
-    //     $file=$request->file('profile_background');
-    //     $extension = $file->getClientOriginalExtension();
-    //     $filename= 'background'.'.'.$extension;
-    //     $file->move('uploads/'.$user->user_name.'/images/background/',$filename);
-    //     $user->profile->profile_background = URL::asset('/uploads/'.$user->user_name.'/images/background/'.$filename);
-    //     $user->profile->save();
-    //     return $user;
-    // }
+
+    public function uploadBackground(UpdateProfileRequest $request )
+    {
+        $user = auth()->user();
+        $file=$request->file('profile_background');
+        $extension = $file->getClientOriginalExtension();
+        $filename= 'background'.'.'.$extension;
+        $file->move('uploads/'.$user->user_name.'/images/background/',$filename);
+        $user->profile->profile_background = URL::asset('/uploads/'.$user->user_name.'/images/background/'.$filename);
+        $user->profile->save();
+        return $user;
+    }
+
+    public function removeAvatar()
+    { 
+        auth()->user()->profile->update(['profile_photo' => URL::asset('/default/avatar.png')]); 
+        return response()->json(['profile_photo' => URL::asset('/default/avatar.png')]);
+    }
+    
+    public function removeBackground()
+    { 
+        auth()->user()->profile->update(['profile_background' => URL::asset('/default/background.png')]); 
+        return response()->json(['profile_background' => URL::asset('/default/avatar.png')]);
+    }
+
         // $user = auth()->user();
         // $fileName = time().'.'.$request->file('profile_photo')->getClientOriginalExtension();
         // $request->profile_photo->move(storage_path('users/'.$user->user_name.'/images/avatar/'),$fileName);

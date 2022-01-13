@@ -17,7 +17,6 @@ Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
 Route::get('/comments/{comment}', [CommentController::class, 'show']);
 Route::get('/comments', [CommentController::class, 'getAll']);
 
-
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/posts' ,[PostController::class, 'store']);
     Route::put('/posts/{post}' ,[PostController::class, 'update'])->middleware('can:update,post');
@@ -29,8 +28,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/auth/me' ,[ProfileController::class, 'show']);
     
     Route::put('/profile/update', [ProfileController::class, 'updateProfile']);
-    Route::put('/upload', [ProfileController::class, 'uploadAvatar']);
-    // Route::post('/upload', [ProfileController::class, 'uploadBackground']);
-
+    Route::post('/upload/image/avatar', [ProfileController::class, 'uploadAvatar']);
+    Route::post('/upload/image/background', [ProfileController::class, 'uploadBackground']);
+    Route::delete('/remove/image/avatar', [ProfileController::class, 'removeAvatar']);
+    Route::delete('/remove/image/background', [ProfileController::class, 'removeBackground']);
 });
 

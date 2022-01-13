@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 
 class CreateProfilesTable extends Migration
 {
@@ -15,9 +16,9 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('profile_photo')->nullable();
-            $table->string('profile_background')->nullable();
-            $table->string('user_location')->nullable();
+            $table->string('profile_photo')->default(URL::current().':8000/default/avatar.png');
+            $table->string('profile_background')->default(URL::current().':8000/default/background.png');
+            $table->string('user_location')->nullable()->default('Запорожье');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
 
