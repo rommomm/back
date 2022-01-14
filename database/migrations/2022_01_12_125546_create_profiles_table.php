@@ -16,9 +16,9 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('profile_photo')->default(URL::current().':8000/default/avatar.png');
-            $table->string('profile_background')->default(URL::current().':8000/default/background.png');
-            $table->string('user_location')->nullable()->default('Запорожье');
+            $table->string('profile_photo')->nullable();            //default(URL::current().':8000/default/avatar.png');
+            $table->string('profile_background')->nullable();       //default(URL::current().':8000/default/background.png');
+            $table->string('user_location')->nullable();            //default('Запорожье');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
 

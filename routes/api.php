@@ -26,11 +26,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->middleware('can:delete,comment');
     Route::post('/logout' ,[AuthController::class, 'logout']);
     Route::get('/auth/me' ,[ProfileController::class, 'show']);
-    
     Route::put('/profile/update', [ProfileController::class, 'updateProfile']);
-    Route::post('/upload/image/avatar', [ProfileController::class, 'uploadAvatar']);
-    Route::post('/upload/image/background', [ProfileController::class, 'uploadBackground']);
-    Route::delete('/remove/image/avatar', [ProfileController::class, 'removeAvatar']);
-    Route::delete('/remove/image/background', [ProfileController::class, 'removeBackground']);
+    Route::post('/profile/avatar', [ProfileController::class, 'uploadAvatar']);
+    Route::post('/profile/background', [ProfileController::class, 'uploadBackground']);
+    Route::delete('/profile/avatar', [ProfileController::class, 'removeAvatar']);
+    Route::delete('/profile/background', [ProfileController::class, 'removeBackground']);
 });
 
