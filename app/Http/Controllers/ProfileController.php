@@ -70,7 +70,7 @@ class ProfileController extends Controller
     { 
         $user = auth()->user();
         File::delete('storage/'.$user->user_name.'/images/background/background.png');
-        $user->profile->update(['profile_photo' => null]);
+        $user->profile->update(['profile_background' => null]);
         return response()->noContent();
     }
 }
