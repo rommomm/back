@@ -28,8 +28,7 @@ class UpdateProfileRequest extends FormRequest
             'last_name' => 'max:30',
             'profile_photo' => 'image|mimes:png|max:2048',
             'profile_background' => 'image|mimes:png|max:2048',
-            'user_location' => 'max:50',
-
+            'user_location' => 'max:100',
         ];
     }
 }
