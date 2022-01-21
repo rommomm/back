@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\ProfileResource;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 class ProfileController extends Controller
 {
@@ -28,7 +29,7 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
         $request->file('profile_photo')->storeAs('public/'.$user->user_name.'/images/avatar/', 'avatar.png');
-        $user->profile->profile_photo = URL::asset('storage/'.$user->user_name.'/images/avatar/'.'avatar.png');
+        $user->profile->profile_photo = Storage::url(''.$user->user_name.'/images/avatar/'.'avatar.png');
         $user->profile->save();
         return new ProfileResource($user);
         // $user = auth()->user();
@@ -45,7 +46,7 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
         $request->file('profile_background')->storeAs('public/'.$user->user_name.'/images/background/', 'background.png');
-        $user->profile->profile_background = URL::asset('storage/'.$user->user_name.'/images/background/'.'background.png');
+        $user->profile->profile_background = Storage::url(''.$user->user_name.'/images/background/'.'background.png');
         $user->profile->save();
         return new ProfileResource($user);
         // $user = auth()->user();

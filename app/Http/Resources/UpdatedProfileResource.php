@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use PharIo\Manifest\Url;
 
 class UpdatedProfileResource extends JsonResource
 {
@@ -15,8 +16,9 @@ class UpdatedProfileResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'profile_photo' => $this->profile_photo,
-            'profile_background' => $this->profile_background,
+            'profile_photo' => $this->profile_photo ? asset($this->profile_photo) : null,
+            'profile_background' =>$this->profile_background 
+            ? asset($this->profile_background): null ,
             'user_location' => $this->user_location,
         ];
     }
