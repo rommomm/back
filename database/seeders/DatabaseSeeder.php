@@ -6,7 +6,6 @@ use App\Models\Comment;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Profile;
-use Database\Factories\ProfileFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,9 +17,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(1)->has(Profile::factory()->count(1))->has(
-            Post::factory()->count(10)
-                ->has(Comment::factory()->count(10))
-        )->create();
+        $users = User::factory()->count(10)->has(Profile::factory())->create();
+        $users->each(function ($user){
+            $posts = $user->posts()->saveMany(Post::factory()->count(10)->make());
+            $posts->each(function ($post) use($user){
+                $post->comments()->saveMany(Comment::factory(['author_id'=> $user->id])->count(10)->make());
+            });
+        });
     }
 }

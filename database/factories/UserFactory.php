@@ -18,8 +18,8 @@ class UserFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'user_name' => $this->faker->userName(),
-            'email' => 'email@example.com',
-            'password' => 'qweasdzxc', // password
+            'email' => $this->faker->unique()->safeEmail(),
+            'password' => 'qweasdzxc',
             'remember_token' => Str::random(10),
         ];
     }

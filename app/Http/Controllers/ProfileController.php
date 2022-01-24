@@ -6,7 +6,6 @@ use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\ProfileResource;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
 class ProfileController extends Controller
 {
 
@@ -32,14 +31,6 @@ class ProfileController extends Controller
         $user->profile->profile_photo = Storage::url(''.$user->user_name.'/images/avatar/'.'avatar.png');
         $user->profile->save();
         return new ProfileResource($user);
-        // $user = auth()->user();
-        // $file=$request->file('profile_photo');
-        // $extension = $file->getClientOriginalExtension();
-        // $filename= 'avatar'.'.'.$extension;
-        // $file->move('uploads/'.$user->user_name.'/images/avatar/',$filename);
-        // $user->profile->profile_photo = URL::asset('/uploads/'.$user->user_name.'/images/avatar/'.$filename);
-        // $user->profile->save();
-        // return new ProfileResource($user);
     }
 
     public function uploadBackground(UpdateProfileRequest $request )
@@ -49,14 +40,6 @@ class ProfileController extends Controller
         $user->profile->profile_background = Storage::url(''.$user->user_name.'/images/background/'.'background.png');
         $user->profile->save();
         return new ProfileResource($user);
-        // $user = auth()->user();
-        // $file=$request->file('profile_background');
-        // $extension = $file->getClientOriginalExtension();
-        // $filename= 'background'.'.'.$extension;
-        // $file->move('uploads/'.$user->user_name.'/images/background/',$filename);
-        // $user->profile->profile_background = URL::asset('/uploads/'.$user->user_name.'/images/background/'.$filename);
-        // $user->profile->save();
-        // return new ProfileResource($user);
     }
 
     public function removeAvatar()
