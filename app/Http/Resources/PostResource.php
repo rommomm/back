@@ -3,7 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\UserResource;
+
+
 class PostResource extends JsonResource
 {
     /**
@@ -19,7 +20,11 @@ class PostResource extends JsonResource
             'content' => $this->content,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'author' => new UserResource($this->author)
+            'author' => new UserResource($this->author),
+            'comments_count' => $this->when(
+                isset($this->comments_count),
+                $this->comments_count
+            ),
         ];
     }
 }

@@ -12,20 +12,21 @@ class PostController extends Controller
 {
     public function index()
     {
-        return PostResource::collection(Post::orderBy('id', 'desc')->with('author')->get());
+        return PostResource::collection(Post::orderBy('id', 'desc')
+            ->withCount('comments')->get());
     }
 
     public function store(CreatePostRequest $request)
     {
-        $post = auth()->user()->posts()->create($request->validated()) ;
+        $post = auth()->user()->posts()->create($request->validated());
         return new PostResource($post);
     }
 
     public function show(Post $post)
     {  
-        return new PostResource($post);
+    return new PostResource($post);   
     }
-
+    
     public function update(UpdatePostRequest $request, Post $post)
     {
         $post->update($request->validated());
@@ -38,8 +39,8 @@ class PostController extends Controller
         return response()->noContent();
     } 
 
-    public function getAllByUser(User $author) 
+    public function getAllByUser(User $user) 
     {
-        return $author->posts()->orderBy('id' , 'desc')->get();
+        return $user->posts()->orderBy('id' , 'desc')->withCount('comments')->get();  
     }
 }
