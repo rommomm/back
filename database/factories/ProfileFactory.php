@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 
 class ProfileFactory extends Factory
@@ -15,8 +16,8 @@ class ProfileFactory extends Factory
     public function definition()
     {
         return [
-            'profile_photo' => URL::current().':8000/default/avatar.png',
-            'profile_background' => URL::current().':8000/default/background.png',
+            'profile_photo' => Storage::url('default/avatar.png'),
+            'profile_background' => Storage::url('default/background.png'),
             'user_location' => $this->faker->streetAddress(),
         ];
     }
