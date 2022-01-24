@@ -12,11 +12,11 @@ class CommentPolicy
 
     public function update(User $author, Comment $comment)
     {
-        return $author->id === $comment->user_id;
+        return $author->id === $comment->author_id;
     }
 
     public function delete(User $author, Comment $comment)
     {
-        return $author->id === $comment->user_id;
+        return $author->id === $comment->author_id;
     }
 }
