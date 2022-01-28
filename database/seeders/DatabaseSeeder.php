@@ -17,6 +17,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        User::factory([
+            'email' => 'email@example.com',
+            'password' => 'qweasdzxc',
+        ])->create();
+
         $users = User::factory()->count(10)->has(Profile::factory())->create();
         $users->each(function ($user){
             $posts = $user->posts()->saveMany(Post::factory()->count(10)->make());
