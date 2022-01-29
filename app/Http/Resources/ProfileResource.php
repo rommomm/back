@@ -18,9 +18,12 @@ class ProfileResource extends JsonResource
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
-            'user_name' => $this->user_name,
-            'profile' => new UpdatedProfileResource($this->profile)
-            
+            'user_name' => $this->user->user_name,
+            'email' => $this->user->email,
+            'profile_avatar' => $this->profile_avatar ? asset("/storage/{$this->profile_avatar}") : null,
+            'profile_background' =>$this->profile_background 
+            ? asset("/storage/{$this->profile_background}"): null ,
+            'user_location' => $this->user_location,
         ];
     }
 }

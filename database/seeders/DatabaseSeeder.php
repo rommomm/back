@@ -17,16 +17,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory([
-            'email' => 'email@example.com',
-            'password' => 'qweasdzxc',
-        ])->create();
-
-        $users = User::factory()->count(10)->has(Profile::factory())->create();
+        $users = User::factory()->has(Profile::factory())->count(2)->create();
         $users->each(function ($user){
-            $posts = $user->posts()->saveMany(Post::factory()->count(10)->make());
+            $posts = $user->posts()->saveMany(Post::factory()->count(2)->make());
             $posts->each(function ($post) use($user){
-                $post->comments()->saveMany(Comment::factory(['author_id'=> $user->id])->count(10)->make());
+                $post->comments()->saveMany(Comment::factory(['author_id'=> $user->id])->count(2)->make());
             });
         });
     }

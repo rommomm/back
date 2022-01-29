@@ -17,6 +17,9 @@ class CommentTest extends TestCase
     {
         parent::setUp();
         $user = $this->authUser();
+        $this->profile = $this->createProfile([
+            'user_id' => $user->id
+        ]);
         $post = $this->post = $this->createPost([
             'content' => 'my first post',
             'author_id' => $user->id,

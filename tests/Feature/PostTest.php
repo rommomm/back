@@ -16,6 +16,9 @@ class PostTest extends TestCase
     {
         parent::setUp();
         $user = $this->authUser();
+        $this->profile = $this->createProfile([
+            'user_id' => $user->id
+        ]);
         $this->post = $this->createPost([
             'content' => 'my first post my first post',
             'author_id' => $user->id

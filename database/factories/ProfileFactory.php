@@ -16,8 +16,12 @@ class ProfileFactory extends Factory
     public function definition()
     {
         return [
-            'profile_photo' => Storage::url('default/avatar.png'),
-            'profile_background' => Storage::url('default/background.png'),
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'profile_avatar' => 'default/' . $this->faker->
+            image('storage/app/public/default', 600, 400, 'AVATAR', false),
+            'profile_background' => 'default/' . $this->faker->
+            image('storage/app/public/default', 600, 400, 'AVATAR', false),
             'user_location' => $this->faker->streetAddress(),
         ];
     }

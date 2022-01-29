@@ -39,8 +39,8 @@ class PostController extends Controller
         return response()->noContent();
     } 
 
-    public function getAllByUser(User $user) 
+    public function getAllByUser(User $author) 
     {
-        return $user->posts()->orderBy('id' , 'desc')->withCount('comments')->get();  
+        return $author->posts()->orderBy('id' , 'desc')->withCount('comments')->get();  
     }
 }

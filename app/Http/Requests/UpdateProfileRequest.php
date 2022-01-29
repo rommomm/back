@@ -26,8 +26,8 @@ class UpdateProfileRequest extends FormRequest
         return [
             'first_name' => 'max:30',
             'last_name' => 'max:30',
-            'profile_photo' => 'image|mimes:png|max:2048',
-            'profile_background' => 'image|mimes:png|max:2048',
+            'profile_avatar' => 'image|max:2048',
+            'profile_background' => 'image|max:2048',
             'user_location' => 'max:100',
         ];
     }

@@ -12,9 +12,8 @@ class AuthController extends Controller
 {
     public function register(SignUpRequest $request) 
     {
-       $user =  User::create($request->validated());
-        $profile = new Profile();
-        $user->profile()->save($profile);
+        $user =  User::create($request->validated());
+        $user->profile()->create($request->validated());
         $user->save();
         return response()->noContent(201);
     }

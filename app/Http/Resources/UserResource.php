@@ -16,10 +16,9 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
             'user_name' => $this->user_name,
-            'profile' => new UpdatedProfileResource($this->profile)
+            'first_name' => $this->profile->first_name,
+            'profile_avatar' => $this->profile->profile_avatar ? asset('storage/'.$this->profile->profile_avatar) : null,
         ];
     }
 }
