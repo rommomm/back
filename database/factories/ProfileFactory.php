@@ -19,9 +19,9 @@ class ProfileFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'profile_avatar' => 'default/' . $this->faker->
-            image('storage/app/public/default', 600, 400, 'AVATAR', false),
+            image('storage/app/public/default', 600, 400, 'avatar', false),
             'profile_background' => 'default/' . $this->faker->
-            image('storage/app/public/default', 600, 400, 'AVATAR', false),
+            image('storage/app/public/default', 1000, 400, 'background', false),
             'user_location' => $this->faker->streetAddress(),
         ];
     }
