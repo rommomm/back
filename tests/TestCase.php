@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Sanctum\Sanctum;
@@ -31,6 +32,11 @@ abstract class TestCase extends BaseTestCase
     public function createUser($args = [])
     {
         return User::factory()->create($args);
+    }
+
+    public function createProfile($args = [])
+    {
+        return Profile::factory()->create($args);
     }
 
     public function authUser()

@@ -16,7 +16,7 @@ class RegisterTest extends TestCase
      *
      * @return void
      */
-    public function test_a_user_can_register()
+    public function test_user_can_register()
     {
         $data = [
             "first_name" => 'Bublic',

@@ -17,30 +17,25 @@ class PostTest extends TestCase
         parent::setUp();
         $user = $this->authUser();
         $this->post = $this->createPost([
-            'content' => 'my list',
+            'content' => 'my first post my first post',
             'author_id' => $user->id
         ]);
     }
 
-    public function test_get_all_posts()
+    public function test_posts_all()
     {
-        $this->createPost();
-        $response = $this->getJson('api/posts')->json('data');
-
-        $this->assertEquals(1, count($response));
-        $this->assertEquals('my list', $response[0]['content']);
+        $this->getJson('api/posts')->assertStatus(200);
     }
 
-    public function test_get_single_post()
+    public function test_post_single()
     {
-        $response = $this->getJson(`api/posts` , $this->post->id)
+        $response = $this->getJson("/api/posts/{$this->post->id}")
             ->assertOk()
             ->json('data');
-
         $this->assertEquals($response['content'], $this->post->content);
     }
 
-    public function test_create_post()
+    public function test_post_create()
     {
         $data = [
             'content' => $this->faker->text,
@@ -50,17 +45,17 @@ class PostTest extends TestCase
             ->assertCreated();
     }
 
-    public function test_delete_post()
+    public function test_post_delete()
     {
-        $this->deleteJson(`api/posts` , $this->post->id)
+        $this->deleteJson("/api/posts/{$this->post->id}")
             ->assertNoContent();
 
         $this->assertDatabaseMissing('posts', ['content' => $this->post->content]);
     }
 
-    public function test_update_post()
+    public function test_post_update()
     {
-        $this->patchJson('api/posts', $this->post->id, ['content' => 'updated content'])
+        $this->putJson("/api/posts/{$this->post->id}", ['content' => 'updated content'])
             ->assertOk();
 
         $this->assertDatabaseHas('posts', ['id' => $this->post->id, 'content' => 'updated content']);
