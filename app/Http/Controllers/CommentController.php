@@ -11,7 +11,7 @@ class CommentController extends Controller
 {
     public function index(Post $post)
     {
-        return CommentResource::collection($post->comments()->orderBy('id' , 'desc')->get());
+        return CommentResource::collection($post->comments()->orderBy('id' , 'desc')->paginate(10));
     }
 
     public function getAll(Comment $comment)
