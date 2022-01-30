@@ -10,10 +10,9 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 
-    public function index(Request $request)
+    public function index()
     {
-        $users = User::all();
-        return ProfileUserResource::collection($users);
+        return ProfileUserResource::collection(User::all());
     }
 
     public function show(User $user) 
