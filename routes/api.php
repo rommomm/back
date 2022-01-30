@@ -9,9 +9,10 @@ use App\Http\Controllers\ProfileController;
 
 Route::post('/register' ,[AuthController::class, 'register']);
 Route::post('/login' ,[AuthController::class, 'login']);
-Route::get('users/{user:user_name}', [UserController::class, 'show']);
+Route::get('/users/{user:user_name}', [UserController::class, 'show']);
+Route::get('/users', [UserController::class, 'index']);
 Route::get('/posts' ,[PostController::class, 'index']);
-Route::get('users/{author:user_name}/posts', [PostController::class, 'getAllByUser']);
+Route::get('/users/{author:user_name}/posts', [PostController::class, 'getAllByUser']);
 Route::get('/posts/{post}' ,[PostController::class, 'show']);
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
 Route::get('/comments/{comment}', [CommentController::class, 'show']);
