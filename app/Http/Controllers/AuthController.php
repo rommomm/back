@@ -14,7 +14,6 @@ class AuthController extends Controller
     {
         $user =  User::create($request->validated());
         $user->profile()->create($request->validated());
-        $user->save();
         return response()->noContent(201);
     }
 
