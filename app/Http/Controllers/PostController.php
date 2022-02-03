@@ -13,7 +13,7 @@ class PostController extends Controller
     public function index()
     {
         return PostResource::collection(Post::orderBy('id', 'desc')
-            ->withCount('comments')->get());
+            ->withCount('comments')->paginate(10));
     }
 
     public function store(CreatePostRequest $request)
@@ -41,6 +41,6 @@ class PostController extends Controller
 
     public function getAllByUser(User $author) 
     {
-        return $author->posts()->orderBy('id' , 'desc')->withCount('comments')->get();  
+        return $author->posts()->orderBy('id' , 'desc')->withCount('comments')->paginate(10);  
     }
 }
