@@ -41,6 +41,6 @@ class PostController extends Controller
 
     public function getAllByUser(User $author) 
     {
-        return $author->posts()->orderBy('id' , 'desc')->withCount('comments')->paginate(10);  
+        return $author->posts()->orderBy('id' , 'desc')->withCount('comments')->cursorPaginate(10);  
     }
 }
