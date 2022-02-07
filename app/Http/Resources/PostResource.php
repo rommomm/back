@@ -25,6 +25,7 @@ class PostResource extends JsonResource
                 $this->comments_count
             ),
             'author' => new UserResource($this->author),
+            'mentioned_users' => UserResource::collection($this->mentionedUsers),
         ];
     }
 }

@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasMentions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, HasMentions;
 
     protected $fillable = ['content'];
 

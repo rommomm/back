@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\ProfileUserResource;
 use App\Http\Resources\UserResource;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-
-    public function index()
+   public function index(Request $request)
     {
-        return ProfileUserResource::collection(User::paginate(10));
+        $users = User::whereUsername($request->query('username'))->paginate($request->query('limit'));
+
+        return ProfileUserResource::collection($users);
     }
 
     public function show(User $user) 
@@ -23,5 +25,15 @@ class UserController extends Controller
     public function search($query)
     {
         return ProfileUserResource::collection(User::where('user_name', 'Like', "%$query%")->get());
+    }
+
+    public function mentioningPosts()
+    {
+        return $this->morphedByMany(Post::class, 'mentionable');
+    }
+
+    public function mentioningComments()
+    {
+        return $this->morphedByMany(Comment::class, 'mentionable');
     }
 }

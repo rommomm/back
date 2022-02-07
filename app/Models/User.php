@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Builder;
 
 
 class User extends Authenticatable
@@ -55,12 +56,30 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class,'author_id');
     }
+
     public function comments()
     {
         return $this->hasMany(Comment::class, 'author_id');
     }
+
     public function profile()
     {
-      return $this->hasOne(Profile::class);
+        return $this->hasOne(Profile::class);
+    }
+
+    public function scopeWhereUsername(Builder $builder, ?string $query)
+    {
+        return $query ? $builder->where('user_name', 'like', "%$query%") : $builder;
+    }
+
+    public function mentioningPosts()
+    {
+        return $this->morphedByMany(Post::class, 'mention');
+    }
+
+    public function mentioningComments()
+    {
+        return $this->morphedByMany(Comment::class, 'mention');
     }
 }
+
