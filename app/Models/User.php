@@ -74,12 +74,12 @@ class User extends Authenticatable
 
     public function mentioningPosts()
     {
-        return $this->morphedByMany(Post::class, 'mention');
+        return $this->morphedByMany(Post::class, 'mentionable');
     }
 
     public function mentioningComments()
     {
-        return $this->morphedByMany(Comment::class, 'mention');
+        return $this->morphedByMany(Comment::class, 'mentionable');
     }
 }
 

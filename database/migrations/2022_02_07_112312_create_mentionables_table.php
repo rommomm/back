@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMentionTable extends Migration
+class CreateMentionablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateMentionTable extends Migration
      */
     public function up()
     {
-        Schema::create('mentions', function (Blueprint $table) {
-            $table->integer('user_id')->constrained()->onDelete('cascade');
-            $table->integer('mention_id');
-            $table->string("mention_type");
+        Schema::create('mentionables', function (Blueprint $table) {
+            $table->integer("user_id")->constrained("users")->onDelete('cascade');
+            $table->integer("mentionable_id");
+            $table->string("mentionable_type");
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateMentionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mentions');
+        Schema::dropIfExists('mentionables');
     }
 }

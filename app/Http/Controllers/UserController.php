@@ -26,14 +26,4 @@ class UserController extends Controller
     {
         return ProfileUserResource::collection(User::where('user_name', 'Like', "%$query%")->get());
     }
-
-    public function mentioningPosts()
-    {
-        return $this->morphedByMany(Post::class, 'mentionable');
-    }
-
-    public function mentioningComments()
-    {
-        return $this->morphedByMany(Comment::class, 'mentionable');
-    }
 }

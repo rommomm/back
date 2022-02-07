@@ -3,12 +3,11 @@
 namespace App\Http\Traits;
 
 use App\Models\User;
-
 trait HasMentions
 {
     public function mentionedUsers()
     {
-        return $this->morphToMany(User::class, 'mention');
+        return $this->morphToMany(User::class, 'mentionable');
     }
 
     public function parseMentions()
