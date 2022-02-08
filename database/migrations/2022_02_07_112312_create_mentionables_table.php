@@ -14,7 +14,8 @@ class CreateMentionablesTable extends Migration
     public function up()
     {
         Schema::create('mentionables', function (Blueprint $table) {
-            $table->integer("user_id")->constrained("users")->onDelete('cascade');
+            $table->bigIncrements('id');
+            $table->integer("user_id")->constrained()->onDelete('cascade');
             $table->integer("mentionable_id");
             $table->string("mentionable_type");
             $table->timestamps();
