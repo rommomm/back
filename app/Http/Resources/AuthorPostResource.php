@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 
-class PostResource extends JsonResource
+class AuthorPostResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,7 +24,6 @@ class PostResource extends JsonResource
                 isset($this->comments_count),
                 $this->comments_count
             ),
-            'author' => new UserResource($this->author),
             'mentioned' => MentionResource::collection($this->mentioned),
         ];
     }

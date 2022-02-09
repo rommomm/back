@@ -12,7 +12,7 @@ class UserController extends Controller
 {
    public function index(Request $request)
     {
-        $users = User::whereUsername($request->query('username'))->paginate($request->query('limit'));
+        $users = User::whereUsername($request->query('user_name'))->paginate($request->query('limit'));
 
         return ProfileUserResource::collection($users);
     }

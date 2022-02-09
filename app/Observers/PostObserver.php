@@ -8,16 +8,16 @@ class PostObserver
 {
     public function created(Post $post)
     {
-        $post->parseMentions();
+        $post->parsed();
     }
 
     public function updated(Post $post)
     {
-        $post->parseMentions();
+        $post->parsed();
     }
 
     public function deleted(Post $post)
     {
-        $post->mentionedUsers()->detach();
+        $post->mentioned()->detach();
     }
 }

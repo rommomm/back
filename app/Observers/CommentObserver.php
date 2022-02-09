@@ -8,16 +8,16 @@ class CommentObserver
 {
     public function created(Comment $comment)
     {
-        $comment->parseMentions();
+        $comment->parsed();
     }
 
     public function updated(Comment $comment)
     {
-        $comment->parseMentions();
+        $comment->parsed();
     }
 
     public function deleted(Comment $comment)
     {
-        $comment->mentionedUsers()->detach();
+        $comment->mentioned()->detach();
     }
 }

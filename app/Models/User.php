@@ -67,7 +67,7 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
-    public function scopeWhereUsername(Builder $builder, ?string $query)
+    public function scopeWhereUsername(Builder $builder, $query)
     {
         return $query ? $builder->where('user_name', 'like', "%$query%") : $builder;
     }

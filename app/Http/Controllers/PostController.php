@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\AuthorPostResource;
 use App\Models\Post;
 use App\Http\Resources\PostResource;
 use App\Models\User;
@@ -41,7 +42,8 @@ class PostController extends Controller
     } 
 
     public function getAllByUser(User $author) 
-    {
-        return $author->posts()->orderBy('id' , 'desc')->withCount('comments')->cursorPaginate(10);  
+    {    
+        $post = $author->posts()->orderBy('id' , 'desc')->withCount('comments')->cursorPaginate(10);
+        return AuthorPostResource::collection($post);
     }
 }

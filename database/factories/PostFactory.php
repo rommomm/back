@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class PostFactory extends Factory
 {
@@ -12,10 +12,11 @@ class PostFactory extends Factory
      *
      * @return array
      */
+
     public function definition()
     {
         return [
-            'content' => $this->faker->text(),
+            'content' => $this->faker->text() . ' @' . User::all()->random()->user_name,
         ];
     }
 

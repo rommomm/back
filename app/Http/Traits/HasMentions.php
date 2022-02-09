@@ -3,26 +3,27 @@
 namespace App\Http\Traits;
 
 use App\Models\User;
+
 trait HasMentions
 {
-    public function mentionedUsers()
+    public function mentioned()
     {
         return $this->morphToMany(User::class, 'mentionable');
     }
 
-    public function parseMentions()
+    public function parsed()
     {
-        preg_match_all("/@([\w\.]+)/", $this->content, $matches);
-        $mentions = [];
+        $mentionUsers = [];
+        preg_match_all("/\B@(\w+)/", $this->content, $mentionedUsers);
 
-        foreach (array_unique($matches[1]) as $mention) {
-            $user = User::whereUsername($mention)->first();
+        foreach (array_unique($mentionedUsers[1]) as $mentionedUser) {
+            $user = User::whereUsername($mentionedUser)->first();
 
             if ($user) {
-                array_push($mentions, $user->id);
+                array_push($mentionUsers, $user->id);
             }
         }
 
-        $this->mentionedUsers()->sync($mentions);
+        $this->mentioned()->sync($mentionUsers);
     }
 }
