@@ -5,13 +5,15 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SignInRequest;
 use App\Http\Requests\SignUpRequest;
+use App\Models\Profile;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     public function register(SignUpRequest $request) 
     {
-        User::create($request->validated());
+        $user =  User::create($request->validated());
+        $user->profile()->create($request->validated());
         return response()->noContent(201);
     }
 
