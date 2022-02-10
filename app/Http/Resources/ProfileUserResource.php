@@ -23,6 +23,9 @@ class ProfileUserResource extends JsonResource
             'profile_background' =>$this->profile->profile_background 
             ? asset("/storage/{$this->profile->profile_background}"): null ,
             'user_location' => $this->profile->user_location,
+            'followings_count' =>$this->followings_count,
+            'followers_count' => $this->followers_count,
+            'following' => $this->following,
         ];
     }
 }

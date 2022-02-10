@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Builder;
-
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -80,6 +80,32 @@ class User extends Authenticatable
     public function mentioningComments()
     {
         return $this->morphedByMany(Comment::class, 'mentionable');
+    }
+
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'followings', 'follower_id', 'user_id');
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followings', 'user_id', 'follower_id');
+    }
+
+    public function getFollowingAttribute()
+    {
+        if (! $this->relationLoaded('followings')) {
+            $this->load(['followings' => function ($query) {
+                $query->where('follower_id', auth()->id());
+            }]);
+        }
+
+        $followers = $this->getRelation('followings');
+
+        if (! empty($followers) && $followers->contains('user_id', auth()->id())) {
+            return true;
+        }
+        return false;
     }
 }
 

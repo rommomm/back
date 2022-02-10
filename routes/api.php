@@ -18,6 +18,8 @@ Route::get('/posts/{post}' ,[PostController::class, 'show']);
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
 Route::get('/comments/{comment}', [CommentController::class, 'show']);
 Route::get('/comments', [CommentController::class, 'getAll']);
+Route::get('/users/{user:user_name}/followers', [UserController::class, 'followers']);
+Route::get('/users/{user:user_name}/followings', [UserController::class, 'followings']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/posts' ,[PostController::class, 'store']);
@@ -33,5 +35,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/profile/background', [ProfileController::class, 'uploadBackground']);
     Route::delete('/profile/avatar', [ProfileController::class, 'removeAvatar']);
     Route::delete('/profile/background', [ProfileController::class, 'removeBackground']);
+    Route::post('/users/{user:user_name}/follow', [UserController::class, 'follow'])->middleware('can:follow,user');
+    Route::delete('/users/{user:user_name}/unfollow', [UserController::class, 'unfollow']);
+   
 });
 
