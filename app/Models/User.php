@@ -94,18 +94,8 @@ class User extends Authenticatable
 
     public function getFollowingAttribute()
     {
-        if (! $this->relationLoaded('followings')) {
-            $this->load(['followings' => function ($query) {
-                $query->where('follower_id', auth()->id());
-            }]);
-        }
-
-        $followers = $this->getRelation('followings');
-
-        if (! empty($followers) && $followers->contains('user_id', auth()->id())) {
-            return true;
-        }
-        return false;
+        return $this->followers()->where('follower_id', auth()->id())->exists() ? true : false;
     }
 }
+
 

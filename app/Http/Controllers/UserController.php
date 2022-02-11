@@ -1,10 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ProfileResource;
 use App\Http\Resources\ProfileUserResource;
 use App\Http\Resources\UserResource;
-use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -23,7 +21,7 @@ class UserController extends Controller
 
     public function search($query)
     {
-        return ProfileUserResource::collection(User::where('user_name', 'Like', "%$query%")->get());
+        return ProfileUserResource::collection(User::WhereUsername($query)->withCount('followings','followers')->get());
     }
 
     public function followings(User $user)
@@ -36,7 +34,6 @@ class UserController extends Controller
         return UserResource::collection($user->followers()->paginate(10));
     }
 
-
     public function follow(Request $request, User $user)
     {
         $request->user()->followings()->syncWithoutDetaching($user->id);
@@ -46,7 +43,6 @@ class UserController extends Controller
     public function unfollow(Request $request, User $user)
     {
         $request->user()->followings()->detach($user->id);
-
         return response()->noContent();
     }
     

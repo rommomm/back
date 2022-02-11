@@ -7,7 +7,9 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\AuthorPostResource;
 use App\Models\Post;
 use App\Http\Resources\PostResource;
+use App\Http\Resources\ProfileUserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -20,7 +22,6 @@ class PostController extends Controller
     public function store(CreatePostRequest $request)
     {
         $post = auth()->user()->posts()->create($request->validated());
-
         return new PostResource($post);
     }
 
@@ -46,4 +47,10 @@ class PostController extends Controller
         $post = $author->posts()->orderBy('id' , 'desc')->withCount('comments')->cursorPaginate(10);
         return AuthorPostResource::collection($post);
     }
+
+    public function getPostFeed()
+    {
+        return PostResource::collection(Post::postsFeed(auth()->id())->cursorPaginate(10));
+    }
+
 }

@@ -24,7 +24,7 @@ class AuthorPostResource extends JsonResource
                 isset($this->comments_count),
                 $this->comments_count
             ),
-            'mentioned' => MentionResource::collection($this->mentioned),
+            'mentioned' => UserResource::collection($this->mentioned),
         ];
     }
 }
