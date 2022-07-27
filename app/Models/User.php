@@ -26,8 +26,6 @@ class User extends Authenticatable
     }
 
     protected $fillable = [ 
-        'first_name',
-        'last_name',
         'user_name',
         'email',
         'password',
@@ -59,6 +57,10 @@ class User extends Authenticatable
     }
     public function comments()
     {
-        return $this->hasMany(Comment::class,'author_id');
+        return $this->hasMany(Comment::class, 'author_id');
+    }
+    public function profile()
+    {
+      return $this->hasOne(Profile::class);
     }
 }

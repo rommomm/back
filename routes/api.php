@@ -9,14 +9,14 @@ use App\Http\Controllers\ProfileController;
 
 Route::post('/register' ,[AuthController::class, 'register']);
 Route::post('/login' ,[AuthController::class, 'login']);
-Route::get('users/{author:user_name}', [UserController::class, 'show']);
+Route::get('/users/{user:user_name}', [UserController::class, 'show']);
+Route::get('/users', [UserController::class, 'index']);
 Route::get('/posts' ,[PostController::class, 'index']);
-Route::get('users/{user:user_name}/posts', [PostController::class, 'getAllByUser']);
+Route::get('/users/{author:user_name}/posts', [PostController::class, 'getAllByUser']);
 Route::get('/posts/{post}' ,[PostController::class, 'show']);
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
 Route::get('/comments/{comment}', [CommentController::class, 'show']);
 Route::get('/comments', [CommentController::class, 'getAll']);
-
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/posts' ,[PostController::class, 'store']);
@@ -27,6 +27,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->middleware('can:delete,comment');
     Route::post('/logout' ,[AuthController::class, 'logout']);
     Route::get('/auth/me' ,[ProfileController::class, 'show']);
-
+    Route::put('/profile/update', [ProfileController::class, 'updateProfile']);
+    Route::post('/profile/avatar', [ProfileController::class, 'uploadAvatar']);
+    Route::post('/profile/background', [ProfileController::class, 'uploadBackground']);
+    Route::delete('/profile/avatar', [ProfileController::class, 'removeAvatar']);
+    Route::delete('/profile/background', [ProfileController::class, 'removeBackground']);
 });
 
